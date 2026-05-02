@@ -1,0 +1,29 @@
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.env
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Large data files - do not commit
+data/training_corpus.jsonl
+data/*.jsonl
+data/*.parquet
+data/*.csv
+
+# User uploaded files
+storage/data/uploads/
+storage/backups/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

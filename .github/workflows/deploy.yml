@@ -1,0 +1,69 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+
+  # Allow manual trigger from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy InsureIQ
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host:        ${{ secrets.SERVER_HOST }}
+          username:    ubuntu
+          key:         ${{ secrets.SSH_PRIVATE_KEY }}
+          port:        22
+          script_stop: true
+          script: |
+            set -e
+            echo "=== Pulling latest code ==="
+            cd /home/ubuntu/insureiq
+            git pull origin main
+
+            echo "=== Syncing frontend files ==="
+            rsync -a --delete \
+              --exclude='.next' \
+              --exclude='node_modules' \
+              --exclude='.env.local' \
+              --exclude='test-results' \
+              /home/ubuntu/insureiq/frontend/ \
+              /home/ubuntu/insureiq-frontend/
+
+            echo "=== Syncing backend files ==="
+            rsync -a --delete \
+              --exclude='venv' \
+              --exclude='__pycache__' \
+              --exclude='*.pyc' \
+              --exclude='config/.env' \
+              --exclude='storage/data/uploads' \
+              --exclude='storage/backups' \
+              --exclude='data/*.jsonl' \
+              /home/ubuntu/insureiq/backend/ \
+              /home/ubuntu/insurance-ai/
+
+            echo "=== Building frontend ==="
+            cd /home/ubuntu/insureiq-frontend
+            npm ci --prefer-offline
+            npm run build
+
+            echo "=== Restarting services ==="
+            pm2 restart insureiq-frontend
+            pm2 restart insureiq-backend
+            pm2 save
+
+            echo "=== Verifying health ==="
+            sleep 5
+            curl -sf http://localhost:8000/health | python3 -c "import sys,json; d=json.load(sys.stdin); sys.exit(0 if d['status']=='healthy' else 1)"
+            echo "✓ Backend healthy"
+            echo "=== Deploy complete ==="

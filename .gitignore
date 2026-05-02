@@ -1,0 +1,41 @@
+# ── Root ─────────────────────────────────────────────────────────────────────
+.DS_Store
+*.swp
+*.swo
+
+# ── Frontend ─────────────────────────────────────────────────────────────────
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/build/
+frontend/.env.local
+frontend/.env*.local
+frontend/test-results/
+frontend/*.tsbuildinfo
+frontend/next-env.d.ts
+
+# ── Backend ──────────────────────────────────────────────────────────────────
+backend/venv/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/**/*.pyc
+backend/**/*.pyo
+backend/.pytest_cache/
+backend/.coverage
+backend/htmlcov/
+
+# Secrets — never commit
+backend/config/.env
+
+# Large data — committed as empty placeholder dirs only
+backend/data/*.jsonl
+backend/data/*.parquet
+backend/data/*.csv
+
+# User-uploaded files (runtime only)
+backend/storage/data/uploads/
+backend/storage/backups/
+
+# IDE
+.vscode/
+.idea/

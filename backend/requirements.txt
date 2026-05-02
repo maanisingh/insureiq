@@ -1,0 +1,55 @@
+# Core
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+pydantic>=2.5.0
+pydantic[email]>=2.5.0
+python-dotenv>=1.0.0
+
+# Database
+psycopg2-binary>=2.9.9
+redis>=5.0.0
+
+# Vector DB
+qdrant-client>=1.7.0
+
+# MCP
+mcp>=1.0.0
+fastmcp>=0.1.0
+
+# Auth
+PyJWT>=2.8.0
+bcrypt>=4.1.0
+passlib[bcrypt]>=1.7.4
+
+# Multi-Agent (AutoGen 0.4+)
+autogen-agentchat>=0.7.5
+pyautogen>=0.10.0
+
+# AWS Bedrock (embeddings + generation + extraction)
+boto3>=1.34.0
+
+# Web search (search_tools MCP server)
+beautifulsoup4>=4.12.0
+
+# Document extraction
+fastapi-mail>=1.4.0
+aiofiles>=23.0.0
+pypdf>=4.0.0
+python-docx>=1.1.0
+openpyxl>=3.1.0
+pandas>=2.0.0
+
+# Actuarial / data science (pricing models)
+scipy>=1.11.0
+scikit-learn>=1.4.0
+statsmodels>=0.14.0
+matplotlib>=3.8.0
+
+# Utilities
+python-multipart>=0.0.6
+httpx>=0.26.0
+numpy>=1.26.0
+
+# Testing
+pytest>=8.0.0
+pytest-asyncio>=0.23.0

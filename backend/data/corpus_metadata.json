@@ -1,0 +1,7 @@
+{
+  "total_records": 547226,
+  "hf_records": 468601,
+  "github_chunks": 78625,
+  "created": "2026-05-02T10:18:39.285101",
+  "output": "/home/ubuntu/insurance-ai/data/training_corpus.jsonl"
+}
